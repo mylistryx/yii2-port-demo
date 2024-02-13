@@ -22,6 +22,26 @@ class AdminModule extends Module implements BootstrapInterface
                     ''       => 'index',
                 ],
             ]),
+            new GroupUrlRule([
+                'prefix' => 'admin/category',
+                'rules'  => [
+                    'create' => 'create',
+                    'update' => 'update',
+                    'delete' => 'delete',
+                    'view'   => 'view',
+                    ''       => 'index',
+                ],
+            ]),
+            new GroupUrlRule([
+                'prefix' => 'admin/article',
+                'rules'  => [
+                    'create' => 'create',
+                    'update' => 'update',
+                    'delete' => 'delete',
+                    'view'   => 'view',
+                    ''       => 'index',
+                ],
+            ]),
         ];
         $urlManager = $app->getUrlManager();
         $urlManager->addRules($rules);

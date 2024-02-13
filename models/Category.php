@@ -26,7 +26,13 @@ class Category extends ActiveRecord
 
     public function rules(): array
     {
-        return [];
+        return [
+            [['title', 'description'], 'required'],
+            ['title', 'string'],
+            ['description', 'string'],
+            ['parent_id', 'integer'],
+            ['parent_id', 'exist', 'targetClass' => static::class, 'targetAttribute' => 'id', 'skipOnEmpty' => true],
+        ];
     }
 
     public function getParent(): ActiveQuery

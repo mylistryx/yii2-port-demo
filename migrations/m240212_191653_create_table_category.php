@@ -17,6 +17,7 @@ class m240212_191653_create_table_category extends Migration
         $this->createTable($this->table, [
             'id'          => $this->primaryKey(),
             'parent_id'   => $this->integer()->null()->comment('Родительская категория'),
+            'level'       => $this->integer()->notNull()->comment('Уровень'),
             'title'       => $this->string()->notNull()->comment('Наименование'),
             'description' => $this->text()->null()->comment('Описание'),
         ]);

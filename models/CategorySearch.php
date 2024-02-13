@@ -5,14 +5,27 @@ namespace app\models;
 use yii\data\ActiveDataProvider;
 use yii\data\DataProviderInterface;
 
-class CategorySearch extends Article
+class CategorySearch extends Category
 {
+    public function rules(): array
+    {
+        return [
+            ['title', 'string'],
+        ];
+    }
+
     public function search(?array $params = []): DataProviderInterface
     {
-        $query = static::find();
+        $query = Category::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'  => [
+                'defaultOrder' => [
+                    'level' => SORT_ASC,
+                    'id'    => SORT_ASC,
+                ],
+            ],
         ]);
 
         $this->load($params);
@@ -22,6 +35,7 @@ class CategorySearch extends Article
         }
 
         $query->andFilterWhere(['id' => $this->id]);
+        $query->andFilterWhere(['LIKE', 'title', $this->title]);
 
         return $dataProvider;
     }

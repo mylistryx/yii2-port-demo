@@ -43,12 +43,20 @@ $this->beginBody() ?>
         'options'    => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top'],
     ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
+        'options' => ['class' => 'navbar-nav me-auto'],
         'items'   => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'Authors', 'url' => ['/admin/author/index'], 'visible' => Yii::$app->user->isGuest],
+            ['label' => 'Authors', 'url' => ['/admin/author/index'], 'visible' => !Yii::$app->user->isGuest],
+            ['label' => 'Categories', 'url' => ['/admin/category/index'], 'visible' => !Yii::$app->user->isGuest],
+            ['label' => 'Articles', 'url' => ['/admin/article/index'], 'visible' => !Yii::$app->user->isGuest],
+        ],
+    ]);
+
+    echo Nav::widget([
+        'class' => 'navbar-nav ms-auto',
+        'items' => [
             Yii::$app->user->isGuest
                 ? ['label' => 'Login', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
@@ -61,6 +69,7 @@ $this->beginBody() ?>
                 . '</li>',
         ],
     ]);
+
     NavBar::end();
     ?>
 </header>

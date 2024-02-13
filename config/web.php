@@ -72,6 +72,8 @@ $config = [
                 ''        => '/site/index',
                 'about'   => '/site/about',
                 'contact' => '/site/contact',
+                'login'   => '/site/login',
+                'logout'  => '/site/logout',
             ],
             'normalizer'          => [
                 'class'  => UrlNormalizer::class,
@@ -93,7 +95,7 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class'      => DebugModule::class,
-        'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['*'],
     ];
 }
 
