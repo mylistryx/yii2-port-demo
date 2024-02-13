@@ -4,6 +4,7 @@ namespace app\models;
 
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * @property int $id
@@ -14,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property int $author_id
  * @property-read Author $author
  * @property-read array|Category[] $categories
+ * @property-read array $authorsList
  */
 class Article extends ActiveRecord
 {
@@ -40,5 +42,10 @@ class Article extends ActiveRecord
     public function getCategories(): ActiveQuery
     {
         return $this->hasMany(Category::class, ['id' => 'category_id'])->via('articleCategory');
+    }
+
+    public static function getAuthorsList(): array
+    {
+        return ArrayHelper::map(Author::find()->all(), 'id', 'name');
     }
 }
