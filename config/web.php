@@ -1,12 +1,15 @@
 <?php
 
 use app\models\Identity;
+use app\modules\admin\AdminModule;
 use app\modules\api\ApiModule;
 use yii\caching\FileCache;
 use yii\debug\Module as DebugModule;
 use yii\gii\Module as GiiModule;
 use yii\log\FileTarget;
 use yii\symfonymailer\Mailer;
+use yii\web\UrlNormalizer;
+use yii\web\UrlRule;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
@@ -14,14 +17,21 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id'         => 'basic',
     'basePath'   => dirname(__DIR__),
-    'bootstrap'  => ['log', 'api'],
+    'bootstrap'  => [
+        'log',
+        'admin',
+        'api',
+    ],
     'aliases'    => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
     'modules'    => [
-        'api' => [
+        'api'   => [
             'class' => ApiModule::class,
+        ],
+        'admin' => [
+            'class' => AdminModule::class,
         ],
     ],
     'components' => [
@@ -55,13 +65,21 @@ $config = [
         ],
         'db'           => $db,
         'urlManager'   => [
-            'enablePrettyUrl' => true,
-            'showScriptName'  => false,
-            'rules'           => [
+            'enablePrettyUrl'     => true,
+            'enableStrictParsing' => true,
+            'showScriptName'      => false,
+            'rules'               => [
                 ''        => '/site/index',
                 'about'   => '/site/about',
                 'contact' => '/site/contact',
             ],
+            'normalizer'          => [
+                'class'  => UrlNormalizer::class,
+                'action' => UrlNormalizer::ACTION_REDIRECT_PERMANENT,
+
+                'normalizeTrailingSlash' => true,
+            ],
+            'suffix'              => null,
         ],
     ],
     'params'     => $params,

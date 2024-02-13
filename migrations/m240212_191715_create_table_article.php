@@ -7,7 +7,7 @@ use yii\db\Migration;
  */
 class m240212_191715_create_table_article extends Migration
 {
-    private string $table = '{{%author}}';
+    private string $table = '{{%article}}';
     private string $authorTable = '{{%author}}';
 
     /**

@@ -13,7 +13,7 @@ use yii\web\View;
 
 $this->title = 'Article list';
 $this->params['breadcrumbs'][] = 'Articles';
-$this->params['breadcrumbs'] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-list">
     <?= GridView::widget([

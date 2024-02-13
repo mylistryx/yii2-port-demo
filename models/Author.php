@@ -24,6 +24,11 @@ class Author extends ActiveRecord
 
     public function rules(): array
     {
-        return [];
+        return [
+            [['name'], 'required'],
+            ['name', 'string', 'length' => [3, 255]],
+            ['birthday', 'date', 'format' => 'php:Y-m-d'],
+            ['biography', 'string'],
+        ];
     }
 }

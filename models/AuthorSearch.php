@@ -5,11 +5,19 @@ namespace app\models;
 use yii\data\ActiveDataProvider;
 use yii\data\DataProviderInterface;
 
-class AuthorSearch extends Article
+class AuthorSearch extends Author
 {
+    public function rules(): array
+    {
+        return [
+            ['id', 'integer'],
+            ['name', 'string'],
+        ];
+    }
+
     public function search(?array $params = []): DataProviderInterface
     {
-        $query = static::find();
+        $query = Author::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -22,6 +30,7 @@ class AuthorSearch extends Article
         }
 
         $query->andFilterWhere(['id' => $this->id]);
+        $query->andFilterWhere(['LIKE', 'name', $this->name]);
 
         return $dataProvider;
     }
