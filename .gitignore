@@ -15,12 +15,6 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
-# composer itself is not needed
-composer.phar
-
-# composer lock
-composer.lock
-
 # Mac DS_Store Files
 .DS_Store
 
@@ -31,6 +25,3 @@ phpunit.phar
 
 tests/_output/*
 tests/_support/_generated
-
-#vagrant folder
-/.vagrant
