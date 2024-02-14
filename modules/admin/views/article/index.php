@@ -12,6 +12,7 @@ use yii\data\DataProviderInterface;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\bootstrap5\Html;
+use yii\helpers\Url;
 use yii\web\View;
 
 $this->title = 'Article list';
@@ -28,7 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns'      => [
             'id',
             'title',
-            'image',
+            [
+                'attribute' => 'image',
+                'format'    => 'raw',
+                'value'     => function ($model) {
+                    /** @var Article $model */
+                    return Html::img(Url::toRoute('@web' . '/images/' . $model->image), [
+                        'alt'   => null,
+                        'style' => 'width:100px;',
+                    ]);
+                },
+            ],
             'content',
             [
                 'attribute' => 'author',

@@ -29,10 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description',
+            'level',
             [
                 'attribute' => 'parent',
                 'format'    => 'html',
-                'value'     => fn($model) => $model->parent_id ? Html::a($model->title, ['view', 'id' => $model->parent->id]) : null,
+                'value'     => fn($model) => $model->parent_id ? Html::a($model->parent->title, ['view', 'id' => $model->parent->id]) : null,
             ],
             [
                 'attribute' => 'leaves',
