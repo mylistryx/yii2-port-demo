@@ -25,6 +25,13 @@ DIRECTORY STRUCTURE
 INSTALLATION
 ------------
 
+
+**NOTES:**
+- Дополнительные фичи WEB доступны после авторизации! (admin/admin)
+- Фильтрация статей через стандартные средства Yii (доступные фильтры title, authorFilter, categoryFilter): http://localhost/api/articles?filter[categoryFilter][like]=Lev
+- REST запросы по стандартам Yii2: http://localhost/api/articles http://localhost/api/articles1 e.t.c (доступны только список и просмотр конкретной записи. Связанные поля описаны в extraFields())
+- использование Repository/Service/DTO - в данном примере считаю избыточным overhead, да и на принципы Yii2 это ложится не очень хорошо. Тут только словами объяснить могу.
+
 ### Install with Docker
 
 Update your vendor packages
@@ -39,6 +46,4 @@ Apply migrations
 You can then access the application through the following URL:
 
     http://localhost
-
-**NOTES:** 
-- Дополнительные фичи WEB морды доступны после авторизации! (admin/admin)
+ 
