@@ -7,6 +7,8 @@ use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii\helpers\FileHelper;
+use yii\helpers\Url;
 
 /**
  * @property int $id
@@ -83,8 +85,6 @@ class Article extends ActiveRecord
         $transaction = Yii::$app->db->beginTransaction();
         try {
             if (parent::save($runValidation, $attributeNames)) {
-
-
                 $this->unlinkAll('categories', true);
                 foreach ($this->linkedCategories as $category) {
                     $this->link('categories', Category::findOne($category));
@@ -97,5 +97,16 @@ class Article extends ActiveRecord
         }
 
         return false;
+    }
+
+    public function afterDelete(): void
+    {
+        parent::afterDelete();
+        try {
+            $path = Yii::getAlias('@webroot') . '/images/' . $this->image;
+            $path = FileHelper::normalizePath($path);
+            FileHelper::unlink($path);
+        } catch (Throwable) {
+        }
     }
 }
