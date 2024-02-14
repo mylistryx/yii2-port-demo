@@ -40,4 +40,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]) ?>
+    <div class="row">
+        <div class="col-12">
+            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => ['btn', 'btn-info']]) ?>
+            <?php
+            if (!$model->getArticles()->count()):
+                ?>
+                <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+                'class' => ['btn', 'btn-danger'],
+                'data'  => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method'  => 'post',
+                ],
+            ]) ?>
+            <?php
+            endif;
+            ?>
+        </div>
+    </div>
 </div>

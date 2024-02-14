@@ -27,7 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel'  => $searchModel,
         'columns'      => [
             'id',
-            'title',
+            [
+                'attribute' => 'title',
+                'format'    => 'html',
+                'value'     => fn($model) => Html::a($model->title, ['view', 'id' => $model->id]),
+            ],
             'description',
             'level',
             [

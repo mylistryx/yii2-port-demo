@@ -20,11 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model'      => $model,
         'attributes' => [
-            [
-                'attribute' => 'title',
-                'format'    => 'html',
-                'value'     => fn($model) => Html::a($model->title, ['view', 'id' => $model->id]),
-            ],
+            'title',
             [
                 'attribute' => 'image',
                 'format'    => 'raw',
@@ -54,4 +50,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]) ?>
+    <div class="row">
+        <div class="col-12">
+            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => ['btn', 'btn-info']]) ?>
+
+            <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+                'class' => ['btn', 'btn-danger'],
+                'data'  => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method'  => 'post',
+                ],
+            ]) ?>
+        </div>
+    </div>
 </div>

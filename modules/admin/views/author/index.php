@@ -28,7 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel'  => $searchModel,
         'columns'      => [
             'id',
-            'name',
+            [
+                'attribute' => 'name',
+                'format'    => 'html',
+                'value'     => fn($model) => Html::a($model->name, ['view', 'id' => $model->id]),
+            ],
             [
                 'format'    => ['date', 'dd.MM.YYYY'],
                 'attribute' => 'birthday',

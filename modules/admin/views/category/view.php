@@ -53,11 +53,11 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
     <div class="row">
         <div class="col-12">
-            <?= Html::a('Update', ['category/update', 'id' => $model->id], ['class' => ['btn', 'btn-info']]) ?>
+            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => ['btn', 'btn-info']]) ?>
             <?php
             if (!$model->getLeaves()->count() && !$model->getArticles()->count()):
                 ?>
-                <?= Html::a('Delete', ['category/delete', 'id' => $model->id], [
+                <?= Html::a('Delete', ['delete', 'id' => $model->id], [
                 'class' => ['btn', 'btn-danger'],
                 'data'  => [
                     'confirm' => 'Are you sure you want to delete this item?',

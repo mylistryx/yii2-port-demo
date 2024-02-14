@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 use yii\helpers\Url;
+use yii\web\UploadedFile;
 
 /**
  * @property int $id
@@ -26,6 +27,7 @@ use yii\helpers\Url;
 class Article extends ActiveRecord
 {
     public array $linkedCategories = [];
+    public $uploadedFile;
 
     public static function tableName(): string
     {
@@ -34,19 +36,27 @@ class Article extends ActiveRecord
 
     public function attributeLabels(): array
     {
-        return [];
+        return [
+            'title' => 'Название',
+            'uploadedFile' => 'Картинка',
+            'image' => 'Картинка',
+            'announce' => 'Анонс',
+            'content' => 'Текст',
+            'author_id' => 'Автор',
+            'author' => 'Автор',
+            'categories' => 'Категории',
+        ];
     }
 
     public function rules(): array
     {
         return [
-            [['title'], 'required'],
+            [['title', 'announce', 'content', 'author_id', 'linkedCategories'], 'required'],
             ['author_id', 'exist', 'targetClass' => Author::class, 'targetAttribute' => 'id'],
             ['announce', 'string'],
             ['content', 'string'],
-            ['image', 'string'],
             ['linkedCategories', 'each', 'rule' => ['exist', 'targetClass' => Category::class, 'targetAttribute' => 'id']],
-            ['image', 'file', 'extensions' => ['png', 'gif', 'jpg']],
+            ['uploadedFile', 'file', 'extensions' => ['png', 'gif', 'jpg']],
         ];
     }
 
@@ -84,6 +94,13 @@ class Article extends ActiveRecord
     {
         $transaction = Yii::$app->db->beginTransaction();
         try {
+            /** Костылик. Исключительно для демки! */
+            $uploadedFile = UploadedFile::getInstance($this, 'uploadedFile');
+            $filename = md5(time()) . '.' . $uploadedFile->extension;
+            if ($uploadedFile->saveAs(Yii::getAlias('@webroot' . '/images/' . $filename))) {
+                $this->image = $filename;
+            }
+
             if (parent::save($runValidation, $attributeNames)) {
                 $this->unlinkAll('categories', true);
                 foreach ($this->linkedCategories as $category) {
@@ -93,9 +110,8 @@ class Article extends ActiveRecord
                 return true;
             }
         } catch (Throwable) {
-            $transaction->rollBack();
         }
-
+        $transaction->rollBack();
         return false;
     }
 

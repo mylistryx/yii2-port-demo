@@ -12,7 +12,7 @@ use yii\bootstrap5\Html;
 $form = ActiveForm::begin(); ?>
 <?= $form->field($model, 'title')->textInput(); ?>
 <?= $form->field($model, 'author_id')->dropDownList($model->authorsList) ?>
-<?= $form->field($model, 'image')->fileInput(); ?>
+<?= $form->field($model, 'uploadedFile')->fileInput(); ?>
 <?= $form->field($model, 'announce')->textarea(); ?>
 <?= $form->field($model, 'content')->textarea(); ?>
 <?= $form->field($model, 'linkedCategories')->dropDownList($model->allowedCategories, ['multiple' => true]) ?>
