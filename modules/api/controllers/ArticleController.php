@@ -7,6 +7,8 @@ use app\models\Article;
 use app\models\ArticleSearch;
 use Yii;
 use yii\data\ActiveDataFilter;
+use yii\data\ActiveDataProvider;
+use yii\rest\IndexAction;
 
 final class ArticleController extends ApiActiveController
 {
@@ -18,12 +20,17 @@ final class ArticleController extends ApiActiveController
             'class'        => ActiveDataFilter::class,
             'searchModel'  => $this->modelClass,
             'attributeMap' => [
-                'authorFilter'   => 'author.name',
-                'categoryFilter' => 'category.filter',
+                'authorFilter'   => '{{author}}.[[name]]',
+                'categoryFilter' => '{{category}}.[[title]]',
             ],
         ];
-        $actions['index']['prepareDataProvider'] = function () {
-            return (new ArticleSearch())->search(Yii::$app->request->bodyParams);
+        $actions['index']['prepareDataProvider'] = function (IndexAction $action) {
+            $query = $this->modelClass::find()->joinWith('author')->joinWith('categories');
+            $query->andWhere($action->dataFilter->build());
+
+            return new ActiveDataProvider([
+                'query' => $query,
+            ]);
         };
         return $actions;
     }
