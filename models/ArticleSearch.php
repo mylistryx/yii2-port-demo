@@ -12,7 +12,7 @@ class ArticleSearch extends Article
 {
     public function search(?array $params = []): DataProviderInterface
     {
-        $query = static::find();
+        $query = Article::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

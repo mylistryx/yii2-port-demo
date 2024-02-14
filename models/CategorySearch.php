@@ -22,8 +22,9 @@ class CategorySearch extends Category
             'query' => $query,
             'sort'  => [
                 'defaultOrder' => [
-                    'level' => SORT_ASC,
-                    'id'    => SORT_ASC,
+                    'parent_id' => SORT_ASC,
+                    'level'     => SORT_ASC,
+                    'id'        => SORT_ASC,
                 ],
             ],
         ]);

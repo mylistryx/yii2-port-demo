@@ -9,8 +9,8 @@ use app\models\Article;
 use yii\web\View;
 
 $this->title = 'Update article';
-$this->params['breadcrumbs'][] = 'Articles';
-$this->params['breadcrumbs'] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="update-article">
     <h1><?= $this->title ?></h1>

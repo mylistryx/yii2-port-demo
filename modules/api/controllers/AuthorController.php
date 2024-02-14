@@ -2,26 +2,22 @@
 
 namespace app\modules\api\controllers;
 
+use app\components\controllers\ApiActiveController;
 use app\models\Author;
 use app\models\AuthorSearch;
 use Yii;
-use yii\data\DataProviderInterface;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use yii\data\ActiveDataFilter;
 
-final class AuthorController extends Controller
+final class AuthorController extends ApiActiveController
 {
-    public function actionIndex(): DataProviderInterface
-    {
-        $searchModel = new AuthorSearch();
-        return $searchModel->search(Yii::$app->request->bodyParams);
-    }
+    public $modelClass = Author::class;
 
-    /**
-     * @throws NotFoundHttpException
-     */
-    public function actionView(int $id): Author
+    public function extraActions(): array
     {
-        return Author::findOne($id) ?? throw new NotFoundHttpException();
+        $actions['index']['dataFilter'] = [
+            'class'       => ActiveDataFilter::class,
+            'searchModel' => AuthorSearch::class,
+        ];
+        return $actions;
     }
 }

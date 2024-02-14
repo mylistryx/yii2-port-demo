@@ -13,12 +13,6 @@ class ApiModule extends Module implements BootstrapInterface
 {
     public $controllerNamespace = 'app\modules\api\controllers';
 
-    public function init(): void
-    {
-        parent::init();
-//        Yii::$app->response->format = Response::FORMAT_JSON;
-    }
-
     public function bootstrap($app): void
     {
         $rules = [

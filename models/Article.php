@@ -15,10 +15,13 @@ use yii\helpers\ArrayHelper;
  * @property int $author_id
  * @property-read Author $author
  * @property-read array|Category[] $categories
+ * @property-read array|ArticleCategory[] $articleCategories
  * @property-read array $authorsList
  */
 class Article extends ActiveRecord
 {
+    public array $linkedCategories = [];
+
     public static function tableName(): string
     {
         return '{{%article}}';
@@ -36,12 +39,17 @@ class Article extends ActiveRecord
 
     public function getAuthor(): ActiveQuery
     {
-        return $this->hasOne(Author::class, ['id' => 'parent_id']);
+        return $this->hasOne(Author::class, ['id' => 'author_id']);
     }
 
     public function getCategories(): ActiveQuery
     {
-        return $this->hasMany(Category::class, ['id' => 'category_id'])->via('articleCategory');
+        return $this->hasMany(Category::class, ['id' => 'category_id'])->via('articleCategories');
+    }
+
+    public function getArticleCategories(): ActiveQuery
+    {
+        return $this->hasMany(ArticleCategory::class, ['article_id' => 'id']);
     }
 
     public static function getAuthorsList(): array

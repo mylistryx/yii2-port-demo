@@ -2,17 +2,19 @@
 
 /**
  * @var View $this
- * @var Author $model
+ * @var Category $model
  */
 
-use app\models\Author;
+use app\models\Category;
 use yii\web\View;
 
-$this->title = 'Add new author';
-$this->params['breadcrumbs'][] = ['label' => 'Authors', 'url' => ['index']];
+$this->title = 'Add new category';
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="create-article">
+<div class="create-category">
     <h1><?= $this->title ?></h1>
-    <?= $this->render('_form', ['model' => $model]) ?>
+    <?= $this->render('_form', [
+        'model' => $model,
+    ]) ?>
 </div>

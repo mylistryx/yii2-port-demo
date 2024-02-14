@@ -4,43 +4,32 @@ namespace app\modules\admin;
 
 use yii\base\BootstrapInterface;
 use yii\base\Module;
-use yii\rest\UrlRule;
 use yii\web\GroupUrlRule;
 
 class AdminModule extends Module implements BootstrapInterface
 {
     public function bootstrap($app): void
     {
+        $crudPattern = [
+            'create' => 'create',
+            'update' => 'update',
+            'delete' => 'delete',
+            'view'   => 'view',
+            ''       => 'index',
+        ];
+
         $rules = [
             new GroupUrlRule([
                 'prefix' => 'admin/author',
-                'rules'  => [
-                    'create' => 'create',
-                    'update' => 'update',
-                    'delete' => 'delete',
-                    'view'   => 'view',
-                    ''       => 'index',
-                ],
+                'rules'  => $crudPattern,
             ]),
             new GroupUrlRule([
                 'prefix' => 'admin/category',
-                'rules'  => [
-                    'create' => 'create',
-                    'update' => 'update',
-                    'delete' => 'delete',
-                    'view'   => 'view',
-                    ''       => 'index',
-                ],
+                'rules'  => $crudPattern,
             ]),
             new GroupUrlRule([
                 'prefix' => 'admin/article',
-                'rules'  => [
-                    'create' => 'create',
-                    'update' => 'update',
-                    'delete' => 'delete',
-                    'view'   => 'view',
-                    ''       => 'index',
-                ],
+                'rules'  => $crudPattern,
             ]),
         ];
         $urlManager = $app->getUrlManager();

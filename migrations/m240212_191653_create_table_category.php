@@ -19,7 +19,7 @@ class m240212_191653_create_table_category extends Migration
             'parent_id'   => $this->integer()->null()->comment('Родительская категория'),
             'level'       => $this->integer()->notNull()->comment('Уровень'),
             'title'       => $this->string()->notNull()->comment('Наименование'),
-            'description' => $this->text()->null()->comment('Описание'),
+            'description' => $this->text()->notNull()->comment('Описание'),
         ]);
 
         $this->addForeignKey('FK_Category_ParentId__Category_Id', $this->table, ['parent_id'], $this->table, ['id'], 'CASCADE', 'CASCADE');

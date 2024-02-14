@@ -16,7 +16,7 @@ use yii\web\View;
 $this->title = 'Categories';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="article-list">
+<div class="category-list">
     <div class="row">
         <div class="col-3">
             <?= Html::a('Create', ['create'], ['class' => ['btn', 'btn-primary']]) ?>
@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description',
+            'parent.title',
             ['class' => ActionColumn::class],
         ],
     ]) ?>

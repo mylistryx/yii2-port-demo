@@ -2,25 +2,21 @@
 
 namespace app\modules\api\controllers;
 
+use app\components\controllers\ApiActiveController;
 use app\models\Article;
 use app\models\ArticleSearch;
-use Yii;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use yii\data\ActiveDataFilter;
 
-final class ArticleController extends Controller
+final class ArticleController extends ApiActiveController
 {
-    public function actionIndex(): array
-    {
-        $searchModel = new ArticleSearch();
-        return $searchModel->search(Yii::$app->request->bodyParams)->getModels();
-    }
+    public $modelClass = Article::class;
 
-    /**
-     * @throws NotFoundHttpException
-     */
-    public function actionView(int $id): Article
+    public function extraActions(): array
     {
-        return Article::findOne($id) ?? throw new NotFoundHttpException();
+        $actions['index']['dataFilter'] = [
+            'class'       => ActiveDataFilter::class,
+            'searchModel' => ArticleSearch::class,
+        ];
+        return $actions;
     }
 }

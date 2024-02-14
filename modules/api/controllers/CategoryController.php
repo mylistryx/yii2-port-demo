@@ -2,16 +2,21 @@
 
 namespace app\modules\api\controllers;
 
+use app\components\controllers\ApiActiveController;
+use app\models\Category;
 use app\models\CategorySearch;
-use Yii;
-use yii\data\DataProviderInterface;
-use yii\web\Controller;
+use yii\data\ActiveDataFilter;
 
-final class CategoryController extends Controller
+final class CategoryController extends ApiActiveController
 {
-    public function actionIndex(): DataProviderInterface
+    public $modelClass = Category::class;
+
+    public function extraActions(): array
     {
-        $searchModel = new CategorySearch();
-        return $searchModel->search(Yii::$app->request->queryParams);
+        $actions['index']['dataFilter'] = [
+            'class'       => ActiveDataFilter::class,
+            'searchModel' => CategorySearch::class,
+        ];
+        return $actions;
     }
 }

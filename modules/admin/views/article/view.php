@@ -9,8 +9,8 @@ use yii\web\View;
 use yii\widgets\DetailView;
 
 $this->title = 'View article ID: ' . $model->id;
-$this->params['breadcrumbs'][] = 'Articles';
-$this->params['breadcrumbs'] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="view-article">
