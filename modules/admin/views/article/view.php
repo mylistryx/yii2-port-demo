@@ -26,11 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'    => 'raw',
                 'value'     => function ($model) {
                     return Html::img(Url::toRoute('@web' . '/images/' . $model->image), [
-                        'alt' => null,
+                        'alt'   => null,
+                        'style' => 'max-width: 600px',
                     ]);
                 },
             ],
-            'content',
+            'announce:ntext',
+            'content:ntext',
             [
                 'attribute' => 'author',
                 'format'    => 'html',

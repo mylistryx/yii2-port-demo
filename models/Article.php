@@ -27,8 +27,12 @@ use yii\web\UploadedFile;
 class Article extends ActiveRecord
 {
     public array $linkedCategories = [];
-    public $uploadedFile;
+    public mixed $uploadedFile = null;
 
+    public function init()
+    {
+
+    }
     public static function tableName(): string
     {
         return '{{%article}}';
@@ -37,14 +41,14 @@ class Article extends ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'title' => 'Название',
+            'title'        => 'Название',
             'uploadedFile' => 'Картинка',
-            'image' => 'Картинка',
-            'announce' => 'Анонс',
-            'content' => 'Текст',
-            'author_id' => 'Автор',
-            'author' => 'Автор',
-            'categories' => 'Категории',
+            'image'        => 'Картинка',
+            'announce'     => 'Анонс',
+            'content'      => 'Текст',
+            'author_id'    => 'Автор',
+            'author'       => 'Автор',
+            'categories'   => 'Категории',
         ];
     }
 
@@ -95,10 +99,11 @@ class Article extends ActiveRecord
         $transaction = Yii::$app->db->beginTransaction();
         try {
             /** Костылик. Исключительно для демки! */
-            $uploadedFile = UploadedFile::getInstance($this, 'uploadedFile');
-            $filename = md5(time()) . '.' . $uploadedFile->extension;
-            if ($uploadedFile->saveAs(Yii::getAlias('@webroot' . '/images/' . $filename))) {
-                $this->image = $filename;
+            if ($uploadedFile = UploadedFile::getInstance($this, 'uploadedFile')) {
+                $filename = md5(time()) . '.' . $uploadedFile->extension;
+                if ($uploadedFile->saveAs(Yii::getAlias('@webroot' . '/images/' . $filename))) {
+                    $this->image = $filename;
+                }
             }
 
             if (parent::save($runValidation, $attributeNames)) {
@@ -109,7 +114,7 @@ class Article extends ActiveRecord
                 $transaction->commit();
                 return true;
             }
-        } catch (Throwable) {
+        } catch (Throwable $e) {
         }
         $transaction->rollBack();
         return false;

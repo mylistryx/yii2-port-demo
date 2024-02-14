@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel'  => $searchModel,
         'columns'      => [
             'id',
             [
@@ -47,13 +48,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'content',
             [
                 'attribute' => 'author',
+                'filterAttribute' => 'authorFilter',
                 'format'    => 'html',
                 'value'     => fn($model) => Html::a($model->author->name, ['author/view', 'id' => $model->author->id]),
             ],
             [
-                'attribute' => 'categories',
-                'format'    => 'html',
-                'value'     => function ($model) {
+                'attribute'       => 'categories',
+                'filterAttribute' => 'categoryFilter',
+                'format'          => 'html',
+                'value'           => function ($model) {
                     /** @var Article $model */
                     $categories = [];
                     foreach ($model->categories as $category) {
