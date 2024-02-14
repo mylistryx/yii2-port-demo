@@ -26,6 +26,7 @@ class Author extends ActiveRecord
             'name'      => 'Имя',
             'birthday'  => 'Дата рождения',
             'biography' => 'Биография',
+            'articles'  => 'Статьи',
         ];
     }
 

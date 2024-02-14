@@ -6,6 +6,7 @@
  * @var AuthorSearch $searchModel
  */
 
+use app\models\Article;
 use app\models\AuthorSearch;
 use yii\bootstrap5\Html;
 use yii\data\DataProviderInterface;
@@ -33,6 +34,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'birthday',
             ],
             'biography',
+            [
+                'attribute' => 'articles',
+                'format'    => 'html',
+                'value'     => function ($model) {
+                    $articles = [];
+                    /** @var Article $article */
+                    foreach ($model->articles as $article) {
+                        $articles[] = Html::a($article->title, ['article/view', 'id' => $model->id]);
+                    }
+
+                    return implode('<br>', $articles);
+                },
+            ],
             ['class' => ActionColumn::class],
         ],
     ]) ?>

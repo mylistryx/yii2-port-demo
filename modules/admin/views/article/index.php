@@ -28,7 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns'      => [
             'id',
-            'title',
+            [
+                'attribute' => 'title',
+                'format'    => 'html',
+                'value'     => fn($model) => Html::a($model->title, ['view', 'id' => $model->id]),
+            ],
             [
                 'attribute' => 'image',
                 'format'    => 'raw',
