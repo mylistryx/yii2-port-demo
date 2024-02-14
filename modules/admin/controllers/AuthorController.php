@@ -5,6 +5,7 @@ namespace app\modules\admin\controllers;
 use app\components\controllers\WebController;
 use app\models\Author;
 use app\models\AuthorSearch;
+use BadFunctionCallException;
 use Throwable;
 use Yii;
 use yii\db\StaleObjectException;
@@ -28,7 +29,7 @@ final class AuthorController extends WebController
     {
         $model = new Author();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->success('Article created')->redirect(['index']);
+            return $this->success('Article created')->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -44,7 +45,7 @@ final class AuthorController extends WebController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->success('Item updated')->redirect(['index']);
+            return $this->success('Item updated')->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -72,8 +73,13 @@ final class AuthorController extends WebController
     public function actionDelete(int $id): Response
     {
         $model = $this->findModel($id);
-        $model->delete();
-        return $this->success('Item deleted')->redirect(['index']);
+
+        try {
+            $model->delete();
+            return $this->success('Item deleted')->redirect(['index']);
+        } catch (BadFunctionCallException $e) {
+            return $this->error($e->getMessage())->redirect(['view', 'id' => $model->id]);
+        }
     }
 
     /**

@@ -10,9 +10,16 @@ use yii\data\DataProviderInterface;
  */
 class ArticleSearch extends Article
 {
+    public function rules(): array
+    {
+        return [];
+    }
+
     public function search(?array $params = []): DataProviderInterface
     {
         $query = Article::find();
+        $query->with('author');
+        $query->with('categories');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

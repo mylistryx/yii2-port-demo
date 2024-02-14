@@ -10,13 +10,17 @@ class CategorySearch extends Category
     public function rules(): array
     {
         return [
+            ['id', 'integer'],
             ['title', 'string'],
+            ['description', 'string'],
         ];
     }
 
     public function search(?array $params = []): DataProviderInterface
     {
         $query = Category::find();
+        $query->with('parent');
+        $query->with('leaves');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -37,6 +41,7 @@ class CategorySearch extends Category
 
         $query->andFilterWhere(['id' => $this->id]);
         $query->andFilterWhere(['LIKE', 'title', $this->title]);
+        $query->andFilterWhere(['LIKE', 'description', $this->description]);
 
         return $dataProvider;
     }

@@ -11,13 +11,18 @@ use app\models\ArticleSearch;
 use yii\data\DataProviderInterface;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
-use yii\helpers\Html;
+use yii\bootstrap5\Html;
 use yii\web\View;
 
 $this->title = 'Article list';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-list">
+    <div class="row">
+        <div class="col-3">
+            <?= Html::a('Create', ['create'], ['class' => ['btn', 'btn-primary']]) ?>
+        </div>
+    </div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns'      => [

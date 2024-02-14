@@ -5,7 +5,6 @@ namespace app\modules\api\controllers;
 use app\components\controllers\ApiActiveController;
 use app\models\Author;
 use app\models\AuthorSearch;
-use Yii;
 use yii\data\ActiveDataFilter;
 
 final class AuthorController extends ApiActiveController

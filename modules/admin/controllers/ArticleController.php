@@ -19,7 +19,7 @@ final class ArticleController extends WebController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -28,7 +28,7 @@ final class ArticleController extends WebController
     {
         $model = new Article();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->success('Article created')->redirect(['article/index']);
+            return $this->success('Article created')->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -44,7 +44,7 @@ final class ArticleController extends WebController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->success('Article updated')->redirect(['article/index']);
+            return $this->success('Article updated')->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -76,12 +76,11 @@ final class ArticleController extends WebController
         return $this->success('Article deleted')->redirect(['article/index']);
     }
 
+    /**
+     * @throws NotFoundHttpException
+     */
     protected function findModel(int $id): Article
     {
-        if (($model = Article::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        return Article::findOne($id) ?? throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

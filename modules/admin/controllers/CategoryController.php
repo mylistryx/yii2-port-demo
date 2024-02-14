@@ -97,13 +97,11 @@ final class CategoryController extends WebController
         $model = $this->findModel($id);
         try {
             $model->delete();
+            return $this->info('Category deleted')->redirect(['index']);
         } catch (BadFunctionCallException $e) {
             return $this->error($e->getMessage())->redirect(['view', 'id' => $model->id]);
         }
-
-        return $this->info('Category deleted')->redirect(['index']);
     }
-
 
     /**
      * @throws NotFoundHttpException

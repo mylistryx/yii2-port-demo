@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use BadFunctionCallException;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -9,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $birthday
  * @property string $biography
+ * @property-read $articles
  */
 class Author extends ActiveRecord
 {
@@ -19,7 +22,11 @@ class Author extends ActiveRecord
 
     public function attributeLabels(): array
     {
-        return [];
+        return [
+            'name'      => 'Имя',
+            'birthday'  => 'Дата рождения',
+            'biography' => 'Биография',
+        ];
     }
 
     public function rules(): array
@@ -30,5 +37,19 @@ class Author extends ActiveRecord
             ['birthday', 'date', 'format' => 'php:Y-m-d'],
             ['biography', 'string'],
         ];
+    }
+
+    public function getArticles(): ActiveQuery
+    {
+        return $this->hasMany(Article::class, ['author_id' => 'id']);
+    }
+
+    public function beforeDelete(): bool
+    {
+        if ($this->getArticles()->count()) {
+            throw new BadFunctionCallException('Unlink articles first');
+        }
+
+        return true;
     }
 }

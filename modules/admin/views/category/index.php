@@ -29,7 +29,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description',
-            'parent.title',
+            [
+                'attribute' => 'parent',
+                'format'    => 'html',
+                'value'     => fn($model) => $model->parent_id ? Html::a($model->title, ['view', 'id' => $model->parent->id]) : null,
+            ],
+            [
+                'attribute' => 'leaves',
+                'format'    => 'html',
+                'value'     => function ($model) {
+                    $leaves = [];
+                    foreach ($model->leaves as $leaf) {
+                        $leaves[] = Html::a($leaf->title, ['view', 'id' => $leaf->id]);
+                    }
+                    return implode(', ', $leaves);
+                },
+            ],
             ['class' => ActionColumn::class],
         ],
     ]) ?>

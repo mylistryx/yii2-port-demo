@@ -31,7 +31,7 @@ class Category extends ActiveRecord
         return [
             'title'        => 'Название',
             'description'  => 'Описание',
-            'parent.title' => 'Родительская категория',
+            'parent' => 'Родительская категория',
             'leaves'       => 'Дочерние категории',
             'articles'     => 'Связанные статьи',
         ];
